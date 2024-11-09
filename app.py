@@ -17,6 +17,7 @@ st.write(price_per_manu)
 manu_checker = st.checkbox('manufacturer')
 
 # Visualize vehicle price base on mileage on odometer
+df['price'] = df['price'].astype('float')
 st.header('Vehicle price by milleage')
 fig_odometer_price = px.scatter(df, x='odometer', y='price', labels={'odometer': 'Odometer (miles)', 'price': 'Price ($)'})
 st.write(fig_odometer_price)
