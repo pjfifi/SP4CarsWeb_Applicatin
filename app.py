@@ -21,6 +21,7 @@ selected_manu = df[df['manufacturer'].isin(select_manu)]
 st.dataframe(selected_manu)
 if select_manu:
     fig1 = px.histogram(selected_manu, x='price', color='manufacturer')
+    fig1.update_yaxes(title_text="Number of Vehicles")
     st.plotly_chart(fig1)
 
 # Visualize vehicle price base on mileage on odometer
