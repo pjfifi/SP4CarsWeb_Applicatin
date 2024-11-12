@@ -6,7 +6,8 @@ import plotly.express as px
 df = pd.read_csv('vehicles_us.csv')
 df['price'] = df['price'].astype(int)
 
-df['manufacturer'] = df['model'].apply(lambda x: x.split()[0])
+#df['manufacturer'] = df['model'].apply(lambda x: x.split()[0])
+df['manufacturer'] = df['model'].str.split().str[0]
 
 # create a data viewer
 st.header("Market Value of Used Vehicles")
