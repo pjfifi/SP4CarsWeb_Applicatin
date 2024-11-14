@@ -5,15 +5,14 @@ import plotly.express as px
 
 df = pd.read_csv('vehicles_us.csv')
 
+
 df['price'] = pd.to_numeric(df['price'], errors='coerce') 
-df['price'] = df['price'].fillna(0)
-df['days_listed'] = pd.to_numeric(df['days_listed'], errors='coerce')
-df['days_listed'] = df['days_listed'].fillna(0) 
+df['price'] = df['price'].fillna(0)  
 
-df['price'] = df['price'].astype(float)
-df['days_listed'] = df['days_listed'].astype(int)
+# Ensure the 'price' column is of type float64
+df['price'] = df['price'].astype('float64')
 
-#df['manufacturer'] = df['model'].apply(lambda x: x.split()[0])
+
 df['manufacturer'] = df['model'].str.split().str[0]
 
 # create a data viewer
@@ -34,10 +33,8 @@ if select_manu:
     st.plotly_chart(fig1)
 
 # Visualize vehicle price base on mileage on odometer
-df['price'] = df['price'].astype('float')
 df['odometer'] = df['odometer'].fillna(value='')
 st.header('Vehicle Price by Mileage')
 st.write(""" Let's analyze the impact of mileage the odometer and the price of vehicle.""")
 fig_odometer_price = px.scatter(df, x='odometer', y='price', labels={'odometer': 'Odometer (miles)', 'price': 'Price ($)'})
 st.write(fig_odometer_price)
-
