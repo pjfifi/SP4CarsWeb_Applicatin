@@ -10,7 +10,7 @@ df['price'] = pd.to_numeric(df['price'], errors='coerce')
 df['price'] = df['price'].fillna(0)  
 
 # Ensure the 'price' column is of type float64
-df['price'] = df['price'].astype('float64')
+df['price'] = df['price'].astype(float)
 
 
 df['manufacturer'] = df['model'].str.split().str[0]
