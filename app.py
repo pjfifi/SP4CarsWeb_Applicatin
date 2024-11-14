@@ -4,7 +4,14 @@ import plotly.express as px
 
 
 df = pd.read_csv('vehicles_us.csv')
-df['price'] = df['price'].astype(int)
+
+df['price'] = pd.to_numeric(df['price'], errors='coerce') 
+df['price'] = df['price'].fillna(0)
+df['days_listed'] = pd.to_numeric(df['days_listed'], errors='coerce')
+df['days_listed'] = df['days_listed'].fillna(0) 
+
+df['price'] = df['price'].astype(float)
+df['days_listed'] = df['days_listed'].astype(int)
 
 #df['manufacturer'] = df['model'].apply(lambda x: x.split()[0])
 df['manufacturer'] = df['model'].str.split().str[0]
