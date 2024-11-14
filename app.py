@@ -2,14 +2,13 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-dtypes_dict = {'price':float}
-na_values = ["N/A", "n/a", "NA", "", "-"]
-df = pd.read_csv('vehicles_us.csv', dtype=dtypes_dict,na_values=na_values)
+# Load the data
+df = pd.read_csv('vehicles_us.csv')
 
 df['price'] = pd.to_numeric(df['price'], errors='coerce') 
 df['price'] = df['price'].fillna(0)  
 
-# Ensure the 'price' column is of type float64
+# Ensure the 'price' column set type float64
 df['price'] = df['price'].astype(float)
 
 
@@ -26,7 +25,13 @@ st.header('Vehicle Price by Manufacturer')
 manufacturer_choise = sorted(df['manufacturer'].unique())
 select_manu = st.multiselect('Select the manufacturer',manufacturer_choise)
 selected_manu = df[df['manufacturer'].isin(select_manu)]
-st.dataframe(selected_manu)
+tableview = selected_manu.style.format({
+        'price': '${:,.2f}',  # Format as dollar amount with two decimal places
+    }).format({
+        'model_year': lambda x: f"{x:.0f}"  # Remove commas from years (treated as float/int)
+    })
+tableview
+#st.dataframe(selected_manu)
 if select_manu:
     fig1 = px.histogram(selected_manu, x='price', color='manufacturer')
     fig1.update_yaxes(title_text="Number of Vehicles")
