@@ -2,9 +2,9 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-
-df = pd.read_csv('vehicles_us.csv')
-
+dtypes_dict = {'price':float}
+na_values = ["N/A", "n/a", "NA", "", "-"]
+df = pd.read_csv('vehicles_us.csv', dtype=dtypes_dict,na_values=na_values)
 
 df['price'] = pd.to_numeric(df['price'], errors='coerce') 
 df['price'] = df['price'].fillna(0)  
